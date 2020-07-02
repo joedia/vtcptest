@@ -1,0 +1,158 @@
+
+
+<html>
+
+<body>
+
+<div style='font-family:"Segoe UI";font-size:12pt'>
+<span id=leadcount></span> Leads to be created in VTCP
+</div>
+
+<table style='font-family:"Segoe UI";font-size:10pt'>
+<tr>
+<td>
+Selected Areas: 
+</td>
+<td>
+<input type='text' id='area' style='width:500px' />
+</td>
+</tr>
+
+<tr>
+<td>
+Selected Subsidiaries: 
+</td>
+<td>
+<input type='text' id='sub' style='width:500px' />
+</td>
+</tr>
+
+<tr>
+<td>
+
+Selected Quarters:
+</td>
+<td>
+<input type='text' id='quarter' style='width:500px' />
+</td>
+</tr>
+
+<tr>
+<td>
+Num Expirations: 
+</td>
+<td>
+<input type='text' id='expcount' style='width:500px' />
+</td>
+</tr>
+<tr>
+<td colspan=2>
+<input type=button value=Confirm onclick='showmessage()' />
+</td>
+</tr>
+</table>
+
+</body>
+
+
+<script>
+
+
+
+             // Create a global array that will hold the value of each variable,
+// keyed by the name of the variable.
+var GETDATA = new Array();
+
+// Get the string that follows the "?" in the window's location.
+var sGet = window.location.search;
+sGet = sGet.replace("+", " ");
+
+if (sGet) // if has a value...
+{
+    // Drop the leading "?"
+    sGet = sGet.substr(1);
+   
+    // Generate a string array of the name value pairs.
+    // Each array element will have the form "foo=bar"
+    var sNVPairs = sGet.split("&");
+   
+    // Now, for each name-value pair, we need to extract
+    // the name and value.
+    for (var i = 0; i < sNVPairs.length; i++)
+    {
+        // So, sNVPairs[i] contains the current element...
+        // Split it at the equals sign.
+        var sNV = sNVPairs[i].split("=");
+       
+        // Assign the pair to the GETDATA array.
+        var sName = sNV[0];
+        var sValue = sNV[1];
+        GETDATA[sName] = sValue;
+    }
+}
+
+var areas;
+var subs;
+var quarters;
+var numleads;
+               
+if (GETDATA["SelectedArea"])
+{
+                areas = GETDATA["SelectedArea"];
+		areas = areas.split("%27").join("");
+		areas = areas.split("%20").join(" ");
+}
+else
+{
+                areas = "All";
+}
+
+   
+if (GETDATA["SelectedSubsidiary"])
+{
+                subs = GETDATA["SelectedSubsidiary"];
+		subs = subs.split("%27").join("");
+		subs = subs.split("%20").join(" ");
+}
+else
+{
+                subs = "All";
+}
+
+if (GETDATA["SelectedQuarters"])
+{
+                quarters = GETDATA["SelectedQuarters"];
+		quarters = quarters.split("%27").join("");
+		quarters = quarters.split("%20").join(" ");
+}
+else
+{
+                quarters = "All";
+}
+
+if (GETDATA["ExpCount"])
+{
+                numleads = GETDATA["ExpCount"];
+}
+
+
+
+
+
+document.getElementById('area').value = areas
+
+document.getElementById('sub').value = subs
+
+document.getElementById('quarter').value = quarters
+
+document.getElementById('expcount').value = numleads
+document.getElementById('leadcount').innerHTML = numleads
+
+function showmessage()
+{
+	alert ("Creating " + numleads + " leads in VTCP");
+}
+</script>
+
+
+</html>
